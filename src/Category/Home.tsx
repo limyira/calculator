@@ -2,16 +2,19 @@ import Nav from "../components/Header";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import Hour from "./Hour";
+import WorkTax from "./WorkTax";
 
 const Wrapper = styled.div`
   height: 100vh;
-  max-width: 1140px;
+  max-width: 1400px;
   padding: 0px 140px;
+  margin: 0px auto;
 `;
 const GridBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+
+  margin: 200px 10px;
   height: auto;
 `;
 const Box = styled.div`
@@ -20,15 +23,21 @@ const Box = styled.div`
   margin: auto;
 `;
 const Item = styled.div`
-  width: 80px;
+  width: 180px;
   height: 80px;
+  background-color: white;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  :active {
+    color: blue;
+  }
 `;
 
 const Home = () => {
   const navigate = useNavigate();
-  const HourCalculate = () => {
-    navigate("/hour");
-  };
 
   return (
     <Wrapper>
@@ -37,15 +46,14 @@ const Home = () => {
           <Link to="/hour">
             <Item>시급계산기</Item>
           </Link>
-          <Item>근로소득세</Item>
-          <Item>4대보험</Item>
-          <Item>bkbk</Item>
-          <Item>bkbk</Item>
-          <Item>bkbk</Item>
-          <Item>bkbk</Item>
+          <Link to="/workTax">
+            <Item>근로소득세</Item>
+          </Link>
+          <Link to="/4tax">
+            <Item>4대보험</Item>
+          </Link>
         </GridBox>
       </Box>
-      <Hour />
     </Wrapper>
   );
 };

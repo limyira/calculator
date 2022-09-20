@@ -37,7 +37,7 @@ footer, header, hgroup, main, menu, nav, section {
 body {
   line-height: 1;
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: white;
+  background-color: rgb(239,239,239);
   color:black;
   width: 100%;
 }

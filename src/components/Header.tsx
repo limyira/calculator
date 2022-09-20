@@ -1,12 +1,13 @@
 import styled from "styled-components";
-
+import { useMatch, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 const Header = styled.header`
   margin-bottom: 0;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05),
     inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   padding: 0.74rem 1rem;
-  background-color: rgba(49, 49, 49, 0.92);
-  border-bottom: 1px solid #2979e5;
+  background-color: rgba(49, 49, 49, 0.6);
   display: block;
   box-sizing: border-box;
 `;
@@ -22,13 +23,14 @@ const HeaderBox = styled.div`
 `;
 
 const HomeIcon = styled.div`
-  height: auto;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
-  font-size: 1.25rem;
+  font-size: 3rem;
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
+  color: white;
 `;
 
 const CategoryNav = styled.div`
@@ -37,6 +39,8 @@ const CategoryNav = styled.div`
   justify-content: flex-end !important;
   flex-grow: 1;
   align-items: center;
+  padding: 15px;
+  margin-right: 20px;
 `;
 
 const Ul = styled.ul`
@@ -52,19 +56,53 @@ const Li = styled.li`
   list-style: none;
   color: white;
 `;
+const NavDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Circle = styled(motion.div)`
+  background-color: skyblue;
+  margin-top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 5px;
+`;
 
 const Nav = () => {
+  const navigate = useNavigate();
+  const hourMatch = useMatch("/hour");
+  const workMatch = useMatch("/workTax");
+  const taxMatch = useMatch("/4ax");
+  const goHome = () => {
+    navigate("/");
+  };
+  console.log(hourMatch, workMatch, taxMatch);
   return (
     <Header>
       <HeaderBox>
-        <HomeIcon>Home</HomeIcon>
+        <HomeIcon onClick={goHome}>&larr;</HomeIcon>
         <CategoryNav>
           <Ul>
-            <Li>1</Li>
-            <Li>2</Li>
-            <Li>3</Li>
-            <Li>4</Li>
-            <Li>5</Li>
+            <NavDiv>
+              <Li>
+                <Link to="/hour">시급계산기</Link>
+              </Li>
+              {hourMatch && <Circle layoutId="circle" />}
+            </NavDiv>
+            <NavDiv>
+              <Li>
+                <Link to="/workTax">근로소득세</Link>
+              </Li>
+              {workMatch && <Circle layoutId="circle" />}
+            </NavDiv>
+            <NavDiv>
+              <Li>
+                <Link to="/4ax">4대보험</Link>
+              </Li>
+              {taxMatch && <Circle layoutId="circle" />}
+            </NavDiv>
           </Ul>
         </CategoryNav>
       </HeaderBox>

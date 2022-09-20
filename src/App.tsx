@@ -1,18 +1,6 @@
-import Home from "./Router/Home";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Nav from "./components/Header";
-import Hour from "./Router/Hour";
+import Router from "./Router";
 function App() {
-  return (
-    <BrowserRouter>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="/hour" element={<Hour />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  return <Router />;
 }
 
 export default App;

@@ -2,49 +2,130 @@ import { env } from "process";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+
 const MoneyBox = styled.div`
-  width: 100%;
-  background-color: rgb(245, 245, 247);
-  height: 40px;
-  align-items: center;
   display: flex;
-  span {
-    text-align: start;
-  }
+  -moz-box-pack: justify;
+  background-color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  width: 60%;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 80px;
 `;
 
 const CaculateContainer = styled.div`
   margin-top: 20px;
   display: flex;
   height: 480px;
+  width: 80%;
+  margin: auto;
+  margin-top: 45px;
 `;
 const CalculateBox = styled.div`
-  width: 50%;
+  display: flex;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+  background-color: rgb(255, 255, 255);
+  padding: 40px 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+
+  width: 49%;
+  margin-right: 10px;
+  margin-left: 10px;
+  flex-direction: column;
 `;
 const TotalBox = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: skyblue;
+  background-color: white;
 `;
-const FormBox = styled.div`
-  width: 50%;
-  border: 1px solid;
-  padding-top: 20px;
+const BigBox = styled.div`
+  display: flex;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+  background-color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+
+  width: 49%;
+  margin-right: 10px;
+  margin-left: 10px;
+`;
+
+const Form = styled.form`
+  width: 100%;
+  padding: 10px;
 `;
 const CatBox = styled.div`
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  margin-right: 10px;
+  margin-top: 10px;
+  justify-content: space-between;
+  width: 100%;
 `;
 
+const CatTwo = styled.div`
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+`;
+
+const CatInput = styled.input`
+  margin-right: 10px;
+  width: 180px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 90px;
+  text-align: end;
+  padding: 3px 16px;
+`;
+const CatThree = styled.div`
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+`;
+
+const CatSelect = styled.select`
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 90px;
+  margin-right: 20px;
+  margin-left: 20px;
+  width: 60px;
+  font-size: 13px;
+  text-align: center;
+`;
+
+const CatCheckbox = styled.input`
+  margin-right: 10px;
+`;
+
+const Btn = styled.button`
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  border: none;
+  border-radius: 45px;
+  margin-right: 10px;
+  font-size: 18px;
+  padding: 10px;
+  width: 140px;
+  margin-top: 10px;
+  cursor: pointer;
+`;
 const BtnBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  button {
-    margin-right: 5px;
-    font-size: 18px;
-    padding: 10px;
-  }
 `;
 
 interface IForm {
@@ -87,36 +168,46 @@ const Hour = () => {
     month: false,
   });
   const [interPay, setInterPay] = useState(0);
-  const juhyouCalculate = (dayHour + dayMin) * week;
+  const defaultWork = weekMonth.week
+    ? (dayHour + dayMin) * week * 4.36
+    : (dayHour + dayMin) * week;
+  const juhyouTime = defaultWork / dayHour;
+  const totalWorkTime = defaultWork + juhyouTime;
 
   const {
     register,
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<IForm>();
   const onCalculate = ({ defaultValues: { quote } }: IForm) => {
-    const monthPay = quote * (dayHour + dayMin) * week;
+    const monthPay = quote * defaultWork;
     if (weekMonth.week) {
       if (!plusWork && !plusMinWork) {
-        setExpectPay(monthPay * 4.36);
-        setFinalPay(monthPay * 4.36);
+        setExpectPay(monthPay);
+        setFinalPay(monthPay);
       }
-      setExpectPay(monthPay * 4.36 + quote * 1.5 * (plusWork + plusMinWork));
-      setFinalPay(monthPay * 4.36 + quote * 1.5 * (plusWork + plusMinWork));
+      setExpectPay(monthPay + quote * 1.5 * (plusWork + plusMinWork));
+      setFinalPay(monthPay + quote * 1.5 * (plusWork + plusMinWork));
       settimemoney(quote);
-      if (juhyouCalculate >= 15 && checkOk.ok === true) {
-        setjuhyou((juhyouCalculate / dayHour) * quote);
+      if (defaultWork >= 15 && checkOk.ok === true) {
+        setjuhyou((defaultWork / dayHour) * quote);
       }
       if (taxOk.low) {
-        setTax(monthPay * 4.36 * 0.033);
+        setTax(
+          (monthPay +
+            juhyouTime * quote -
+            (monthPay + juhyouTime * quote) * 0.1) *
+            0.033
+        );
       }
       if (taxOk.high) {
-        setTax(monthPay * 4.36 * 0.0932);
+        setTax(monthPay * 0.0932);
       }
       if (intern.yes) {
-        setInterPay((expectPay + juhyou) * 0.1);
+        setInterPay((monthPay + juhyouTime * quote) * 0.1);
       }
     }
     if (weekMonth.month) {
@@ -127,17 +218,17 @@ const Hour = () => {
       setExpectPay(monthPay + quote * 1.5 * (plusWork + plusMinWork));
       setFinalPay(monthPay + quote * 1.5 * (plusWork + plusMinWork));
       settimemoney(quote);
-      if (juhyouCalculate >= 15 && checkOk.ok === true) {
-        setjuhyou((juhyouCalculate / dayHour) * quote);
+      if (week >= 11 && checkOk.ok === true) {
+        setjuhyou((defaultWork / dayHour) * quote);
       }
       if (taxOk.low) {
-        setTax(monthPay * 0.033);
+        setTax((monthPay + juhyou - (monthPay + juhyou) * 0.1) * 0.033);
       }
       if (taxOk.high) {
-        setTax(monthPay * 0.0932);
+        setTax((monthPay + juhyou) * 0.0932);
       }
       if (intern.yes) {
-        setInterPay((expectPay + juhyou) * 0.1);
+        setInterPay((monthPay + juhyou) * 0.1);
       }
     }
   };
@@ -236,22 +327,37 @@ const Hour = () => {
       }));
     }
   };
+  const retry = () => {
+    settimemoney(0);
+    setFinalPay(0);
+    setDayHour(0);
+    setDayMin(0);
+    setWeek(0);
+    setjuhyou(0);
+    setPlusWork(0);
+    setPlusMinWork(0);
+    setExpectPay(0);
+    setTax(0);
+    setTaxOk({ high: false, low: false, no: false });
+    setcheckOk({ ok: false, nook: false });
+    setIntern({ yes: false, no: false });
+    setWeekMonth({ week: false, month: false });
+    setInterPay(0);
+  };
   return (
     <>
       <MoneyBox>
         2023년 최저시급은 전년대비 5.0% 인상된 9,620원으로 결정되었습니다.
       </MoneyBox>
       <CaculateContainer>
-        <FormBox>
-          <form onSubmit={handleSubmit(onCalculate)}>
+        <BigBox>
+          <Form onSubmit={handleSubmit(onCalculate)}>
             <CatBox>
               <div>
-                <select>
-                  <option>시급</option>
-                </select>
+                <span>시급 &rarr; 월급</span>
               </div>
-              <div>
-                <input
+              <CatTwo>
+                <CatInput
                   {...register("defaultValues.quote", {
                     required: "error_message",
                     minLength: {
@@ -264,46 +370,39 @@ const Hour = () => {
                     },
                   })}
                   placeholder="금액을 입력해주세요"
-                ></input>
+                ></CatInput>
                 <span>원</span>
-              </div>
-              <div>
-                <select>
-                  <option>월급으로</option>
-                </select>
-              </div>
+              </CatTwo>
             </CatBox>
             <CatBox>
               <div>
                 <span>일근무시간</span>
               </div>
-              <div>
-                <select value={dayHour} onInput={selectHour}>
+              <CatThree>
+                <CatSelect value={dayHour} onInput={selectHour}>
                   <option value={0}>시간</option>
                   {hTime.map((i) => (
                     <option value={i} key={i}>
                       {i}
                     </option>
                   ))}
-                </select>
+                </CatSelect>
                 <span>시간</span>
-              </div>
-              <div>
-                <select value={dayMin} onInput={selectMin}>
+                <CatSelect value={dayMin} onInput={selectMin}>
                   <option value={0}>분</option>
                   <option value={0}>0</option>
                   <option value={0.5}>30</option>
-                </select>
+                </CatSelect>
                 <span>분</span>
-              </div>
+              </CatThree>
             </CatBox>
             <CatBox>
               <div>
                 <span>근무일수</span>
               </div>
-              <div>
+              <CatThree>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={weekMonth.week}
                     type="checkbox"
                     id="week"
@@ -312,7 +411,7 @@ const Hour = () => {
                   주
                 </label>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={weekMonth.month}
                     type="checkbox"
                     id="month"
@@ -320,12 +419,9 @@ const Hour = () => {
                   />
                   월
                 </label>
-              </div>
-              <div>
-                <select value={week} onInput={selectWeek}>
+                <CatSelect value={week} onInput={selectWeek}>
                   {weekMonth.week ? (
                     <>
-                      {" "}
                       <option value={0}>선택</option>
                       <option value={0}>0</option>
                       <option value={1}>1</option>
@@ -338,7 +434,6 @@ const Hour = () => {
                     </>
                   ) : (
                     <>
-                      {" "}
                       {Day.map((i) => (
                         <option value={i} key={i}>
                           {i}
@@ -346,40 +441,39 @@ const Hour = () => {
                       ))}
                     </>
                   )}
-                </select>
+                </CatSelect>
                 <span>일</span>
-              </div>
+              </CatThree>
             </CatBox>
             <CatBox>
               <div>
                 <span>월연장근무</span>
               </div>
-              <div>
-                <select onInput={PlusSelect}>
+              <CatThree>
+                <CatSelect value={plusWork} onInput={PlusSelect}>
                   <option value={0}>시간</option>
                   {plusTime.map((i) => (
                     <option value={i} key={i}>
                       {i}
                     </option>
                   ))}
-                </select>
+                </CatSelect>
                 <span>시간</span>
-              </div>
-              <div>
-                <select onInput={PluseMinSelect}>
+                <CatSelect value={plusMinWork} onInput={PluseMinSelect}>
+                  <option value={0}>분</option>
                   <option value={0}>00</option>
                   <option value={0.5}>30</option>
-                </select>
+                </CatSelect>
                 <span>분</span>
-              </div>
+              </CatThree>
             </CatBox>
             <CatBox>
               <div>
                 <span>주휴수당</span>
               </div>
-              <div>
+              <CatThree>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={checkOk.ok}
                     id="agree"
                     type="checkbox"
@@ -388,7 +482,7 @@ const Hour = () => {
                   포함
                 </label>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={checkOk.nook}
                     id="notagree"
                     type="checkbox"
@@ -396,15 +490,15 @@ const Hour = () => {
                   />
                   제외
                 </label>
-              </div>
+              </CatThree>
             </CatBox>
             <CatBox>
               <div>
                 <span>세금</span>
               </div>
-              <div>
+              <CatThree>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={taxOk.no}
                     type="checkbox"
                     id="no"
@@ -413,7 +507,7 @@ const Hour = () => {
                   없음
                 </label>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={taxOk.high}
                     type="checkbox"
                     id="high"
@@ -422,7 +516,7 @@ const Hour = () => {
                   9.32%
                 </label>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={taxOk.low}
                     type="checkbox"
                     id="low"
@@ -430,15 +524,15 @@ const Hour = () => {
                   />
                   3.3%
                 </label>
-              </div>
+              </CatThree>
             </CatBox>
             <CatBox>
               <div>
                 <span>수습 여부</span>
               </div>
-              <div>
+              <CatThree>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={intern.yes}
                     type="checkbox"
                     onChange={internCheck}
@@ -447,7 +541,7 @@ const Hour = () => {
                   포함
                 </label>
                 <label>
-                  <input
+                  <CatCheckbox
                     checked={intern.no}
                     type="checkbox"
                     onChange={internCheck}
@@ -455,27 +549,54 @@ const Hour = () => {
                   />
                   제외
                 </label>
-              </div>
+              </CatThree>
             </CatBox>
             <BtnBox>
-              <button>다시하기</button>
-              <button>계산하기</button>
+              <Btn onClick={retry}>다시하기</Btn>
+              <Btn>계산하기</Btn>
             </BtnBox>
-          </form>
-          <span>{errors.defaultValues?.quote?.message}</span>
-        </FormBox>
+          </Form>
+        </BigBox>
 
         <CalculateBox>
           <TotalBox>
             <span>구분</span>
             <span>시간/금액</span>
           </TotalBox>
+          <TotalBox>
+            <span>총 근무시간</span>
+            <span>
+              {Math.ceil(totalWorkTime)
+                ? Math.ceil(totalWorkTime + (plusWork + plusMinWork))
+                : 0}
+              시간
+            </span>
+          </TotalBox>
+          <TotalBox>
+            <span>기본 근무시간</span>
+            <span>{Math.floor(defaultWork)}시간</span>
+          </TotalBox>
+          {checkOk.ok === true ? (
+            <TotalBox>
+              <span>주휴시간</span>
+              <span>{Math.floor(juhyouTime)}시간</span>
+            </TotalBox>
+          ) : null}
+
+          {checkOk.ok === true ? (
+            <TotalBox>
+              <span>연장 시간</span>
+              <span>
+                {plusMinWork ? `${plusWork} 시간 30분 ` : `${plusWork} 시간`}
+              </span>
+            </TotalBox>
+          ) : null}
 
           {plusWork | plusMinWork ? (
             <TotalBox>
-              <span>추가근무</span>
-              <span>
-                {Math.ceil(
+              <span style={{ color: "green" }}>연장 수당</span>
+              <span style={{ color: "green" }}>
+                {Math.floor(
                   timemoney * 1.5 * (plusWork + plusMinWork)
                 ).toLocaleString()}
                 원
@@ -484,37 +605,55 @@ const Hour = () => {
           ) : null}
           {checkOk.ok === true ? (
             <TotalBox>
-              <span>주휴수당</span>
-              <span>{juhyou.toLocaleString()}원</span>
+              <span style={{ color: "green" }}>주휴수당</span>
+              <span style={{ color: "green" }}>
+                {(Math.floor(juhyou / 1000) * 1000).toLocaleString()}원
+              </span>
             </TotalBox>
           ) : null}
           <TotalBox>
             <span>기본 월급</span>
-            <span> {(Math.ceil(expectPay / 10) * 10).toLocaleString()}원</span>
+            <span>
+              {(
+                Math.floor(
+                  Number(
+                    expectPay - timemoney * 1.5 * (plusWork + plusMinWork)
+                  ) / 1000
+                ) * 1000
+              ).toLocaleString()}
+              원
+            </span>
           </TotalBox>
           <TotalBox>
             <span>예상월급</span>
             <span>
-              {(Math.ceil((expectPay + juhyou) / 10) * 10).toLocaleString()}원
+              {(
+                Math.floor((expectPay + juhyou) / 1000) * 1000
+              ).toLocaleString()}
+              원
             </span>
           </TotalBox>
           {taxOk.high || taxOk.low === true ? (
             <TotalBox>
-              <span>세금</span>
-              <span>{Math.ceil((tax / 10) * 10).toLocaleString()}원</span>
+              <span style={{ color: "red" }}>세금</span>
+              <span style={{ color: "red" }}>
+                -{Math.floor((tax / 1000) * 1000).toLocaleString()}원
+              </span>
             </TotalBox>
           ) : null}
           {intern.yes === true ? (
             <TotalBox>
-              <span>수습</span>
-              <span>{interPay}원</span>
+              <span style={{ color: "red" }}>수습</span>
+              <span style={{ color: "red" }}>
+                -{(Math.floor(interPay / 1000) * 1000).toLocaleString()}원
+              </span>
             </TotalBox>
           ) : null}
           <TotalBox>
             <span>최종예상월급</span>
             <span>
               {(
-                Math.ceil((finalPay + juhyou - tax - interPay) / 10) * 10
+                Math.floor((finalPay + juhyou - tax - interPay) / 1000) * 1000
               ).toLocaleString()}
               원
             </span>
