@@ -9,9 +9,9 @@ const Router = () => {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/*" element={<Home />}></Route>
-        <Route path="hour" element={<Hour />} />
-        <Route path="workTax" element={<WorkTax />} />
+        <Route path="/" element={<Home />}></Route>
+        <Route path="hour/*" element={<Hour />} />
+        <Route path="workTax/*" element={<WorkTax />} />
       </Routes>
     </BrowserRouter>
   );

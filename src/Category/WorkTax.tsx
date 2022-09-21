@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-
+import ExceltoJson from "../utility";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 const MoneyBox = styled.div`
   display: flex;
   -moz-box-pack: justify;
@@ -101,7 +103,28 @@ const CatBox = styled.div`
   margin: 10px auto;
   align-items: center;
 `;
-
+const Overlay = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  z-index: 3;
+`;
+const BigMovie = styled(motion.div)`
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  z-index: 4;
+`;
 interface IForm {
   defaultValues: {
     pay: number;
@@ -109,19 +132,36 @@ interface IForm {
     child: number;
   };
 }
-
+interface IIncome {
+  [index: number]: number;
+}
 const WorkTax = () => {
   const familyCount = Array.from({ length: 11 }, (v, i) => i + 1);
   const childCount = Array.from({ length: 11 }, (v, i) => i);
+  const navigate = useNavigate();
+  const [incomeTax, setIncomeTax] = useState<IIncome>({});
+  const file = ExceltoJson().Tax;
 
   const { register, watch, handleSubmit, setValue, getValues } =
     useForm<IForm>();
-  const formSubmit = () => {};
   const payback = !Number(watch("defaultValues.pay"))
     ? 0
     : Number(watch("defaultValues.pay"));
   const familyCheck = watch("defaultValues.family");
   const childCheck = watch("defaultValues.child");
+  const getPay = getValues("defaultValues.pay");
+
+  const formSubmit = async () => {
+    const getPay = getValues("defaultValues.pay");
+    const MonthPay = Math.round(payback / 1000);
+    const Index: keyof IIncome = familyCheck + childCheck;
+    const hundread = file.find((i) => MonthPay >= i.pay && MonthPay < i.below);
+    if (hundread) {
+      setIncomeTax(hundread);
+      console.log(Object.keys(hundread));
+    }
+  };
+
   return (
     <>
       <MoneyBox>
@@ -202,8 +242,14 @@ const WorkTax = () => {
           </span>
         </Notice>
       </MoneyBox>
+
+      <Overlay hidden></Overlay>
     </>
   );
 };
 
 export default WorkTax;
+
+// 비과세금액
+// 세전기준 330만원이라면
+// 비과세 식대 10, 차량유지비 20등은 제외

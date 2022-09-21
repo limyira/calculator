@@ -72,9 +72,9 @@ const Circle = styled(motion.div)`
 
 const Nav = () => {
   const navigate = useNavigate();
-  const hourMatch = useMatch("/hour");
-  const workMatch = useMatch("/workTax");
-  const taxMatch = useMatch("/4ax");
+  const hourMatch = useMatch("/hour/*");
+  const workMatch = useMatch("/workTax/*");
+  const taxMatch = useMatch("/4ax/*");
   const goHome = () => {
     navigate("/");
   };
