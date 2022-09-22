@@ -74,7 +74,7 @@ const Nav = () => {
   const navigate = useNavigate();
   const hourMatch = useMatch("/hour/*");
   const workMatch = useMatch("/workTax/*");
-  const taxMatch = useMatch("/4ax/*");
+  const taxMatch = useMatch("/insurance/*");
   const goHome = () => {
     navigate("/");
   };
@@ -99,7 +99,7 @@ const Nav = () => {
             </NavDiv>
             <NavDiv>
               <Li>
-                <Link to="/4ax">4대보험</Link>
+                <Link to="/insurance">4대보험</Link>
               </Li>
               {taxMatch && <Circle layoutId="circle" />}
             </NavDiv>
