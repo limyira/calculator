@@ -71,9 +71,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <>
-    <div>
-      <GlobalStyle />
-      <App />
-    </div>
+    <GlobalStyle />
+    <App />
   </>
 );
