@@ -1,9 +1,8 @@
 import Nav from "../components/Header";
 import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
-import Hour from "./Hour";
-import WorkTax from "./WorkTax";
-
+import { useNavigate, Link, Outlet } from "react-router-dom";
+import { useMatch } from "react-router-dom";
+import { motion } from "framer-motion";
 const Wrapper = styled.div`
   height: 100vh;
   max-width: 1400px;
@@ -14,15 +13,14 @@ const GridBox = styled.div`
   display: flex;
   justify-content: space-between;
 
-  margin: 200px 10px;
+  margin: 40px 10px;
   height: auto;
 `;
 const Box = styled.div`
-  height: auto;
   max-width: 960px;
   margin: auto;
 `;
-const Item = styled.div`
+const Item = styled(motion.div)`
   width: 180px;
   height: 80px;
   background-color: white;
@@ -31,29 +29,78 @@ const Item = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  :active {
-    color: blue;
-  }
 `;
 
+const BoxVar = {
+  initial: {
+    y: 0,
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  animate: {
+    y: -10,
+    backgroundColor: "rgba(154, 175, 194, 0.8)",
+  },
+  exit: {
+    y: 0,
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+};
+
 const Home = () => {
-  const navigate = useNavigate();
+  const hourMatch = useMatch(`/hour`);
+  const workMatch = useMatch(`/workTax`);
+  const insuranceMatch = useMatch(`/insurance`);
 
   return (
     <Wrapper>
       <Box>
         <GridBox>
           <Link to="/hour">
-            <Item>시급계산기</Item>
+            {hourMatch ? (
+              <Item
+                variants={BoxVar}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                {" "}
+                시급계산기
+              </Item>
+            ) : (
+              <Item>시급계산기</Item>
+            )}
           </Link>
           <Link to="/workTax">
-            <Item>근로소득세</Item>
+            {workMatch ? (
+              <Item
+                variants={BoxVar}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                근로소득세
+              </Item>
+            ) : (
+              <Item>근로소득세</Item>
+            )}
           </Link>
-          <Link to="/4tax">
-            <Item>4대보험</Item>
+          <Link to="/insurance">
+            {insuranceMatch ? (
+              <Item
+                variants={BoxVar}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                4대보험
+              </Item>
+            ) : (
+              <Item>4대보험</Item>
+            )}
           </Link>
         </GridBox>
       </Box>
+      <Outlet />
     </Wrapper>
   );
 };

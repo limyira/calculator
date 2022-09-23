@@ -39,7 +39,6 @@ const CategoryNav = styled.div`
   justify-content: flex-end !important;
   flex-grow: 1;
   align-items: center;
-  padding: 15px;
   margin-right: 20px;
 `;
 
@@ -78,11 +77,10 @@ const Nav = () => {
   const goHome = () => {
     navigate("/");
   };
-  console.log(hourMatch, workMatch, taxMatch);
   return (
     <Header>
       <HeaderBox>
-        <HomeIcon onClick={goHome}>&larr;</HomeIcon>
+        <HomeIcon onClick={goHome}>Simple Calculator</HomeIcon>
         <CategoryNav>
           <Ul>
             <NavDiv>

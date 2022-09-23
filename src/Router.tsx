@@ -10,10 +10,11 @@ const Router = () => {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="hour/*" element={<Hour />} />
-        <Route path="workTax/*" element={<WorkTax />} />
-        <Route path="insurance" element={<Insurance />} />
+        <Route path="/" element={<Home />}>
+          <Route path="hour/*" element={<Hour />} />
+          <Route path="workTax/*" element={<WorkTax />} />
+          <Route path="insurance" element={<Insurance />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

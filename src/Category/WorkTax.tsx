@@ -13,7 +13,7 @@ const MoneyBox = styled.div`
   border-radius: 10px;
   margin-bottom: 10px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  width: 60%;
+  width: 70%;
   margin: auto;
   margin-top: 60px;
   flex-direction: column;
@@ -42,7 +42,7 @@ const CalculateBox = styled.div`
   margin-bottom: 10px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 
-  width: 60%;
+  width: 70%;
   margin: 40px auto;
 `;
 const Form = styled.form`
@@ -111,7 +111,7 @@ const Overlay = styled(motion.div)`
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 100%;
+  height: 120%;
   background-color: rgba(0, 0, 0, 0.6);
   opacity: 1;
   z-index: 3;
@@ -208,7 +208,7 @@ const WorkTax = () => {
   const [incomeTax, setIncomeTax] = useState<IIncome>({});
   const file = ExceltoJson().Tax;
 
-  const { register, watch, handleSubmit, setValue, getValues } =
+  const { register, watch, handleSubmit, setValue, getValues, reset } =
     useForm<IForm>();
   const payback = !Number(watch("defaultValues.pay"))
     ? 0
@@ -236,6 +236,10 @@ const WorkTax = () => {
   const overlayClick = () => {
     navigate(-1);
   };
+  const resetCalculator = () => {
+    reset({ defaultValues: { pay: 0, family: 1, child: 0 } });
+    // setValue("defaultValues", { pay: 0, family: 1, child: 0 });
+  };
 
   return (
     <>
@@ -260,7 +264,7 @@ const WorkTax = () => {
       </MoneyBox>
       <CalculateBox>
         <Form onSubmit={handleSubmit(formSubmit)}>
-          <TipBox onMouseOver={() => console.log("hi")}>
+          <TipBox>
             Tip: 비과세월급을 입력해주세요.
             <Tip variants={tipvaiatns} whileHover="animate" initial="initial">
               {" "}
@@ -297,13 +301,7 @@ const WorkTax = () => {
             </CatSelect>
           </CatBox>
           <BtnBox>
-            <Btn
-              onClick={() =>
-                setValue("defaultValues", { pay: 0, family: 1, child: 0 })
-              }
-            >
-              다시하기
-            </Btn>
+            <Btn onClick={resetCalculator}>다시하기</Btn>
             <Btn>계산하기</Btn>
           </BtnBox>
         </Form>

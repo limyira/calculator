@@ -11,18 +11,16 @@ const MoneyBox = styled.div`
   border-radius: 10px;
   margin-bottom: 10px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  width: 60%;
+  width: 100%;
   align-items: center;
   justify-content: center;
   margin: auto;
-  margin-top: 80px;
 `;
 
 const CaculateContainer = styled.div`
-  margin-top: 20px;
   display: flex;
   height: 480px;
-  width: 80%;
+  width: 100%;
   margin: auto;
   margin-top: 45px;
 `;

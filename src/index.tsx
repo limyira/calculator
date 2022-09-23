@@ -40,6 +40,9 @@ body {
   background-color: rgb(239,239,239);
   color:black;
   width: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 0),rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url("https://media.istockphoto.com/photos/calculator-on-yellow-background-calculation-in-business-finance-or-picture-id1320740500?b=1&k=20&m=1320740500&s=170667a&w=0&h=THbySiuHoFFDF0R74FN5BQZWxLI2YwZEdY0cUYV-jkc=");
+  box-sizing: cover;
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.2);
 }
 menu, ol, ul {
   list-style: none;
