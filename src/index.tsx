@@ -40,6 +40,7 @@ body {
   background-color: rgb(239,239,239);
   color:black;
   width: 100%;
+ 
 }
 menu, ol, ul {
   list-style: none;

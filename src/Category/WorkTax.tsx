@@ -17,6 +17,10 @@ const MoneyBox = styled.div`
   margin: auto;
   margin-top: 60px;
   flex-direction: column;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    font-size: 0.8rem;
+  }
 `;
 const Notice = styled.div`
   margin-bottom: 10px;
@@ -44,6 +48,10 @@ const CalculateBox = styled.div`
 
   width: 70%;
   margin: 40px auto;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    font-size: 0.8rem;
+  }
 `;
 const Form = styled.form`
   width: 100%;
@@ -104,6 +112,11 @@ const CatBox = styled.div`
   display: flex;
   margin: 10px auto;
   align-items: center;
+  span {
+    @media screen and (max-width: 480px) {
+      font-size: 0.7rem;
+    }
+  }
 `;
 const Overlay = styled(motion.div)`
   position: absolute;
@@ -111,7 +124,7 @@ const Overlay = styled(motion.div)`
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 120%;
+  height: 140%;
   background-color: rgba(0, 0, 0, 0.6);
   opacity: 1;
   z-index: 3;
@@ -128,6 +141,10 @@ const BigCard = styled(motion.div)`
   overflow: hidden;
   z-index: 4;
   padding: 20px;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    font-size: 0.6rem;
+  }
 `;
 const CalculateContainer = styled.div`
   display: flex;

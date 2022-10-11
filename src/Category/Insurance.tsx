@@ -14,6 +14,10 @@ const CatBox = styled.div`
   align-items: center;
   justify-content: start;
   margin: 0 auto;
+  @media screen and (max-width: 480px) {
+    font-size: 0.6rem;
+    padding: 3px;
+  }
 `;
 const CatTwo = styled.div`
   width: 50%;
@@ -45,6 +49,10 @@ const BigBox = styled(motion.div)`
 
   width: 65%;
   margin: 40px auto;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    padding: 10px;
+  }
 `;
 const Cat = styled.div`
   display: flex;
@@ -96,6 +104,9 @@ const Section = styled.div`
   gap: 10px;
   row-gap: 20px;
   text-align: center;
+  @media screen and (max-width: 480px) {
+    font-size: 0.6rem;
+  }
 `;
 const SectionBox = styled.div`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);

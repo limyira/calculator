@@ -15,6 +15,10 @@ const MoneyBox = styled.div`
   align-items: center;
   justify-content: center;
   margin: auto;
+  @media screen and (max-width: 480px) {
+    font-size: 0.8rem;
+    line-height: 20px;
+  }
 `;
 
 const CaculateContainer = styled.div`
@@ -23,6 +27,13 @@ const CaculateContainer = styled.div`
   width: 100%;
   margin: auto;
   margin-top: 45px;
+  @media screen and (max-width: 480px) {
+    font-size: 0.8rem;
+    line-height: 20px;
+    flex-direction: column;
+    padding: 0;
+    margin-left: 0px;
+  }
 `;
 const CalculateBox = styled.div`
   display: flex;
@@ -38,6 +49,10 @@ const CalculateBox = styled.div`
   margin-right: 10px;
   margin-left: 10px;
   flex-direction: column;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    margin-left: 0px;
+  }
 `;
 const TotalBox = styled.div`
   display: flex;
@@ -57,11 +72,21 @@ const BigBox = styled.div`
   width: 49%;
   margin-right: 10px;
   margin-left: 10px;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    margin: 10px 0px;
+    padding: 20px 20px;
+  }
 `;
 
 const Form = styled.form`
   width: 100%;
   padding: 10px;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
 `;
 const CatBox = styled.div`
   display: flex;
@@ -70,6 +95,7 @@ const CatBox = styled.div`
   margin-top: 10px;
   justify-content: space-between;
   width: 100%;
+  align-items: center;
 `;
 
 const CatTwo = styled.div`
@@ -88,10 +114,16 @@ const CatInput = styled.input`
   padding: 3px 16px;
 `;
 const CatThree = styled.div`
-  width: 60%;
+  width: 70%;
   display: flex;
   align-items: center;
   justify-content: end;
+  margin: 0;
+  span {
+    display: block;
+    width: fit-content;
+    word-break: keep-all;
+  }
 `;
 
 const CatSelect = styled.select`
@@ -124,6 +156,7 @@ const BtnBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 `;
 
 interface IForm {
@@ -399,24 +432,30 @@ const Hour = () => {
                 <span>근무일수</span>
               </div>
               <CatThree>
-                <label>
-                  <CatCheckbox
-                    checked={weekMonth.week}
-                    type="checkbox"
-                    id="week"
-                    onChange={weekOrMonth}
-                  />
-                  주
-                </label>
-                <label>
-                  <CatCheckbox
-                    checked={weekMonth.month}
-                    type="checkbox"
-                    id="month"
-                    onChange={weekOrMonth}
-                  />
-                  월
-                </label>
+                <div style={{ display: "flex" }}>
+                  <div>
+                    <label style={{ display: "flex", flexDirection: "row" }}>
+                      <CatCheckbox
+                        checked={weekMonth.week}
+                        type="checkbox"
+                        id="week"
+                        onChange={weekOrMonth}
+                      />
+                      <span>주</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label style={{ display: "flex", flexDirection: "row" }}>
+                      <CatCheckbox
+                        checked={weekMonth.month}
+                        type="checkbox"
+                        id="month"
+                        onChange={weekOrMonth}
+                      />
+                      <span>월</span>
+                    </label>
+                  </div>
+                </div>
                 <CatSelect value={week} onInput={selectWeek}>
                   {weekMonth.week ? (
                     <>

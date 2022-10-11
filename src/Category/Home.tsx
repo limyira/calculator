@@ -5,20 +5,38 @@ import { useMatch } from "react-router-dom";
 import { motion } from "framer-motion";
 const Wrapper = styled.div`
   height: 100vh;
-  max-width: 1400px;
+  width: 100vw;
   padding: 0px 140px;
   margin: 0px auto;
+  @media screen and (max-width: 480px) {
+    padding: 0px 20px;
+    margin: 0 auto;
+  }
 `;
-const GridBox = styled.div`
+const FlexBox = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  @media screen and (max-width: 480px) {
+    justify-content: space-around;
+  }
 
   margin: 40px 10px;
   height: auto;
+  @media screen and (max-width: 480px) {
+    width: 96%;
+    height: 100%;
+    margin-right: 20px;
+  }
 `;
 const Box = styled.div`
   max-width: 960px;
-  margin: auto;
+  margin: 0 auto;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    height: fit-content;
+  }
 `;
 const Item = styled(motion.div)`
   width: 180px;
@@ -29,6 +47,12 @@ const Item = styled(motion.div)`
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    width: 120px;
+    padding: 10px;
+    margin-right: 8px;
+  }
 `;
 
 const BoxVar = {
@@ -54,7 +78,7 @@ const Home = () => {
   return (
     <Wrapper>
       <Box>
-        <GridBox>
+        <FlexBox>
           <Link to="/hour">
             {hourMatch ? (
               <Item
@@ -98,7 +122,7 @@ const Home = () => {
               <Item>4대보험</Item>
             )}
           </Link>
-        </GridBox>
+        </FlexBox>
       </Box>
       <Outlet />
     </Wrapper>

@@ -3,30 +3,26 @@ import { useMatch, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 const Header = styled.header`
-  margin-bottom: 0;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05),
     inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   padding: 0.74rem 1rem;
   background-color: rgba(49, 49, 49, 0.6);
   display: block;
-  box-sizing: border-box;
+  width: 100vw;
 `;
 
 const HeaderBox = styled.div`
   width: 100%;
-  padding-right: var(--bs-gutter-x, 0.75rem);
-  padding-left: var(--bs-gutter-x, 0.75rem);
-  margin-right: auto;
-  margin-left: auto;
   box-sizing: border-box;
   display: flex;
+  margin: 15px 0px;
+  height: fit-content;
+  align-items: center;
 `;
 
 const HomeIcon = styled.div`
-  padding-top: 0.3125rem;
-  padding-bottom: 0.3125rem;
   margin-right: 1rem;
-  font-size: 3rem;
+  font-size: 2.3rem;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
@@ -34,12 +30,15 @@ const HomeIcon = styled.div`
 `;
 
 const CategoryNav = styled.div`
-  display: flex !important;
+  display: flex;
   flex-basis: auto;
-  justify-content: flex-end !important;
+  justify-content: flex-end;
   flex-grow: 1;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 30px;
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const Ul = styled.ul`
@@ -50,23 +49,27 @@ const Ul = styled.ul`
 `;
 
 const Li = styled.li`
-  margin-top: 0.5rem;
+  margin-top: 15px;
   box-sizing: border-box;
   list-style: none;
   color: white;
 `;
 const NavDiv = styled.div`
   display: flex;
+  position: relative;
+
   flex-direction: column;
   align-items: center;
+  height: 50px;
 `;
 
 const Circle = styled(motion.div)`
   background-color: skyblue;
-  margin-top: 8px;
   width: 8px;
-  height: 8px;
+  height: 6px;
   border-radius: 5px;
+  position: absolute;
+  bottom: 0;
 `;
 
 const Nav = () => {
